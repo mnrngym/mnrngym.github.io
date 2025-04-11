@@ -14,7 +14,7 @@
 <body>
   <h1>性格診断フォーム</h1>
 
-  <form action="https://formsubmit.co/mnrngym@gmail.com" method="POST">
+  <form id="personalityForm" action="https://formsubmit.co/mnrngym@gmail.com" method="POST">
 
     <label>1. 性別
       <select name="性別">
@@ -115,11 +115,32 @@
       });
     </script>
 
+    <input type="hidden" name="診断結果" id="result">
     <button type="submit">診断結果送信</button>
   </form>
 
-  <button onclick="copyAll()">すべてコピーする</button>
+  <script>
+    document.getElementById("personalityForm").addEventListener("submit", function(event) {
+      const selects = document.querySelectorAll("form select[name^='Q']");
+      let score = 0;
+      selects.forEach(select => {
+        if (select.value === "はい") score += 2;
+        else if (select.value === "どちらでもない") score += 1;
+      });
 
+      let result = "";
+      if (score >= 80) {
+        result = "あなたは外交的でエネルギッシュなタイプです。";
+      } else if (score >= 60) {
+        result = "あなたはバランスのとれた思慮深いタイプです。";
+      } else {
+        result = "あなたは内向的で繊細なタイプです。";
+      }
+      document.getElementById("result").value = result;
+    });
+  </script>
+
+  <button onclick="copyAll()">すべてコピーする</button>
   <script>
     function copyAll() {
       const range = document.createRange();
