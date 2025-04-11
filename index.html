@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>性格診断フォーム</title>
   <style>
     body { font-family: sans-serif; line-height: 1.6; padding: 20px; }
@@ -14,7 +14,11 @@
 <body>
   <h1>性格診断フォーム</h1>
 
-  <form id="personalityForm" action="https://formsubmit.co/mnrngym@gmail.com" method="POST">
+  <form action="https://formsubmit.co/mnrngym@gmail.com" method="POST">
+    <!-- FormSubmit設定 -->
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="https://mnrngym.github.io/thanks.html">
 
     <label>1. 性別
       <select name="性別">
@@ -28,9 +32,106 @@
     <label>2. 年齢
       <select name="年齢">
         <option value="">選択してください</option>
-        <script>
-          document.write(Array.from({length: 100}, (_, i) => `<option value='${i + 1}'>${i + 1}歳</option>`).join(''));
-        </script>
+        <option value='1'>1歳</option>
+<option value='2'>2歳</option>
+<option value='3'>3歳</option>
+<option value='4'>4歳</option>
+<option value='5'>5歳</option>
+<option value='6'>6歳</option>
+<option value='7'>7歳</option>
+<option value='8'>8歳</option>
+<option value='9'>9歳</option>
+<option value='10'>10歳</option>
+<option value='11'>11歳</option>
+<option value='12'>12歳</option>
+<option value='13'>13歳</option>
+<option value='14'>14歳</option>
+<option value='15'>15歳</option>
+<option value='16'>16歳</option>
+<option value='17'>17歳</option>
+<option value='18'>18歳</option>
+<option value='19'>19歳</option>
+<option value='20'>20歳</option>
+<option value='21'>21歳</option>
+<option value='22'>22歳</option>
+<option value='23'>23歳</option>
+<option value='24'>24歳</option>
+<option value='25'>25歳</option>
+<option value='26'>26歳</option>
+<option value='27'>27歳</option>
+<option value='28'>28歳</option>
+<option value='29'>29歳</option>
+<option value='30'>30歳</option>
+<option value='31'>31歳</option>
+<option value='32'>32歳</option>
+<option value='33'>33歳</option>
+<option value='34'>34歳</option>
+<option value='35'>35歳</option>
+<option value='36'>36歳</option>
+<option value='37'>37歳</option>
+<option value='38'>38歳</option>
+<option value='39'>39歳</option>
+<option value='40'>40歳</option>
+<option value='41'>41歳</option>
+<option value='42'>42歳</option>
+<option value='43'>43歳</option>
+<option value='44'>44歳</option>
+<option value='45'>45歳</option>
+<option value='46'>46歳</option>
+<option value='47'>47歳</option>
+<option value='48'>48歳</option>
+<option value='49'>49歳</option>
+<option value='50'>50歳</option>
+<option value='51'>51歳</option>
+<option value='52'>52歳</option>
+<option value='53'>53歳</option>
+<option value='54'>54歳</option>
+<option value='55'>55歳</option>
+<option value='56'>56歳</option>
+<option value='57'>57歳</option>
+<option value='58'>58歳</option>
+<option value='59'>59歳</option>
+<option value='60'>60歳</option>
+<option value='61'>61歳</option>
+<option value='62'>62歳</option>
+<option value='63'>63歳</option>
+<option value='64'>64歳</option>
+<option value='65'>65歳</option>
+<option value='66'>66歳</option>
+<option value='67'>67歳</option>
+<option value='68'>68歳</option>
+<option value='69'>69歳</option>
+<option value='70'>70歳</option>
+<option value='71'>71歳</option>
+<option value='72'>72歳</option>
+<option value='73'>73歳</option>
+<option value='74'>74歳</option>
+<option value='75'>75歳</option>
+<option value='76'>76歳</option>
+<option value='77'>77歳</option>
+<option value='78'>78歳</option>
+<option value='79'>79歳</option>
+<option value='80'>80歳</option>
+<option value='81'>81歳</option>
+<option value='82'>82歳</option>
+<option value='83'>83歳</option>
+<option value='84'>84歳</option>
+<option value='85'>85歳</option>
+<option value='86'>86歳</option>
+<option value='87'>87歳</option>
+<option value='88'>88歳</option>
+<option value='89'>89歳</option>
+<option value='90'>90歳</option>
+<option value='91'>91歳</option>
+<option value='92'>92歳</option>
+<option value='93'>93歳</option>
+<option value='94'>94歳</option>
+<option value='95'>95歳</option>
+<option value='96'>96歳</option>
+<option value='97'>97歳</option>
+<option value='98'>98歳</option>
+<option value='99'>99歳</option>
+<option value='100'>100歳</option>
       </select>
     </label>
 
@@ -57,90 +158,62 @@
       </select>
     </label>
 
-    <script>
-      const questions = [
-        "計画的に物事を進めるのが好きだ",
-        "新しいことに挑戦するのが好きだ",
-        "人前で話すのが得意だ",
-        "一人で過ごす時間が好きだ",
-        "感情を表に出すことが多い",
-        "細かいことが気になる",
-        "周囲の目を気にする",
-        "常に何かを学びたいと思っている",
-        "決断力がある",
-        "時間にルーズな方だ",
-        "物事をじっくり考えるタイプだ",
-        "社交的である",
-        "直感を信じるほうだ",
-        "完璧を求めがちだ",
-        "人に頼られると嬉しい",
-        "落ち込みやすい",
-        "誰とでも仲良くなれる",
-        "責任感が強い",
-        "感情の起伏が激しい",
-        "長所より短所に目がいきがちだ",
-        "挑戦より安定を好む",
-        "相手の立場で物事を考える",
-        "周りの人を元気づけることができる",
-        "自分の気持ちを素直に伝えるのが得意だ",
-        "集中力がある",
-        "ストレスを感じやすい",
-        "几帳面な性格だ",
-        "優柔不断だと思う",
-        "負けず嫌いな性格だ",
-        "ユーモアがあると言われる",
-        "リーダーシップがある",
-        "コツコツ努力を重ねるタイプだ",
-        "自分の世界に没頭しやすい",
-        "協調性を大切にする",
-        "物事を論理的に考えるタイプだ",
-        "話すより聞く方が得意だ",
-        "自分を客観的に見られる",
-        "好奇心が強い",
-        "自分の意見をはっきり言える",
-        "変化を楽しめるタイプだ",
-        "周囲の空気を読むのが得意だ",
-        "感情を抑えることが多い",
-        "ミスを引きずることが多い",
-        "一度決めたら最後までやり通す",
-        "人の影響を受けやすい",
-        "誰かのために行動するのが好きだ",
-        "自己主張が強い",
-        "空想するのが好きだ",
-        "過去の出来事を引きずるタイプだ",
-        "新しい人間関係を築くのが得意だ"
-      ];
-      questions.forEach((q, i) => {
-        document.write(`<label>${i + 4}. ${q}<select name='Q${i + 4}'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>`);
-      });
-    </script>
+    <label>4. 計画的に物事を進めるのが好きだ<select name='Q4'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>5. 新しいことに挑戦するのが好きだ<select name='Q5'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>6. 人前で話すのが得意だ<select name='Q6'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>7. 一人で過ごす時間が好きだ<select name='Q7'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>8. 感情を表に出すことが多い<select name='Q8'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>9. 細かいことが気になる<select name='Q9'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>10. 周囲の目を気にする<select name='Q10'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>11. 常に何かを学びたいと思っている<select name='Q11'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>12. 決断力がある<select name='Q12'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>13. 時間にルーズな方だ<select name='Q13'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>14. 物事をじっくり考えるタイプだ<select name='Q14'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>15. 社交的である<select name='Q15'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>16. 直感を信じるほうだ<select name='Q16'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>17. 完璧を求めがちだ<select name='Q17'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>18. 人に頼られると嬉しい<select name='Q18'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>19. 落ち込みやすい<select name='Q19'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>20. 誰とでも仲良くなれる<select name='Q20'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>21. 責任感が強い<select name='Q21'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>22. 感情の起伏が激しい<select name='Q22'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>23. 長所より短所に目がいきがちだ<select name='Q23'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>24. 挑戦より安定を好む<select name='Q24'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>25. 相手の立場で物事を考える<select name='Q25'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>26. 周りの人を元気づけることができる<select name='Q26'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>27. 自分の気持ちを素直に伝えるのが得意だ<select name='Q27'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>28. 集中力がある<select name='Q28'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>29. ストレスを感じやすい<select name='Q29'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>30. 几帳面な性格だ<select name='Q30'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>31. 優柔不断だと思う<select name='Q31'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>32. 負けず嫌いな性格だ<select name='Q32'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>33. ユーモアがあると言われる<select name='Q33'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>34. リーダーシップがある<select name='Q34'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>35. コツコツ努力を重ねるタイプだ<select name='Q35'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>36. 自分の世界に没頭しやすい<select name='Q36'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>37. 協調性を大切にする<select name='Q37'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>38. 物事を論理的に考えるタイプだ<select name='Q38'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>39. 話すより聞く方が得意だ<select name='Q39'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>40. 自分を客観的に見られる<select name='Q40'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>41. 好奇心が強い<select name='Q41'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>42. 自分の意見をはっきり言える<select name='Q42'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>43. 変化を楽しめるタイプだ<select name='Q43'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>44. 周囲の空気を読むのが得意だ<select name='Q44'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>45. 感情を抑えることが多い<select name='Q45'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>46. ミスを引きずることが多い<select name='Q46'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>47. 一度決めたら最後までやり通す<select name='Q47'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>48. 人の影響を受けやすい<select name='Q48'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>49. 誰かのために行動するのが好きだ<select name='Q49'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>50. 自己主張が強い<select name='Q50'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>51. 空想するのが好きだ<select name='Q51'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>52. 過去の出来事を引きずるタイプだ<select name='Q52'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
+<label>53. 新しい人間関係を築くのが得意だ<select name='Q53'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
 
-    <input type="hidden" name="診断結果" id="result">
     <button type="submit">診断結果送信</button>
   </form>
 
-  <script>
-    document.getElementById("personalityForm").addEventListener("submit", function(event) {
-      const selects = document.querySelectorAll("form select[name^='Q']");
-      let score = 0;
-      selects.forEach(select => {
-        if (select.value === "はい") score += 2;
-        else if (select.value === "どちらでもない") score += 1;
-      });
-
-      let result = "";
-      if (score >= 80) {
-        result = "あなたは外交的でエネルギッシュなタイプです。";
-      } else if (score >= 60) {
-        result = "あなたはバランスのとれた思慮深いタイプです。";
-      } else {
-        result = "あなたは内向的で繊細なタイプです。";
-      }
-      document.getElementById("result").value = result;
-    });
-  </script>
-
   <button onclick="copyAll()">すべてコピーする</button>
+
   <script>
     function copyAll() {
       const range = document.createRange();
