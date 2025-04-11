@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>性格診断フォーム</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.6; padding: 20px; }
+    label { display: block; margin-top: 10px; }
+    select { width: 100%; padding: 4px; margin-top: 4px; }
+    button { margin-top: 20px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>性格診断フォーム</h1>
+
+  <label>1. 性別
+    <select>
+      <option value="">選択してください</option>
+      <option value="男性">男性</option>
+      <option value="女性">女性</option>
+      <option value="その他">その他</option>
+    </select>
+  </label>
+
+  <label>2. 年齢
+    <select>
+      <option value="">選択してください</option>
+      <!-- 年齢 1歳〜100歳 -->
+      <!-- 年齢選択肢を動的に生成 -->
+      <script>
+        document.write(Array.from({length: 100}, (_, i) => `<option value='${i + 1}'>${i + 1}歳</option>`).join(''));
+      </script>
+    </select>
+  </label>
+
+  <label>3. 職業
+    <select>
+      <option value="">選択してください</option>
+      <option>経営者・役員</option>
+      <option>会社員（総合職）</option>
+      <option>会社員（一般職）</option>
+      <option>契約社員・派遣社員</option>
+      <option>パート・アルバイト</option>
+      <option>公務員（教職員除く）</option>
+      <option>教職員</option>
+      <option>医療関係者</option>
+      <option>自営業・自由業</option>
+      <option>専業主婦・主夫</option>
+      <option>大学生・大学院生</option>
+      <option>専門学校生・短大生</option>
+      <option>高校生</option>
+      <option>士業（公認会計士・弁護士・税理士・司法書士）</option>
+      <option>無職</option>
+      <option>定年退職</option>
+      <option>その他</option>
+    </select>
+  </label>
+
+  <!-- 質問4〜53 -->
+  <script>
+    const questions = [
+      "計画的に物事を進めるのが好きだ",
+      "新しいことに挑戦するのが好きだ",
+      "人前で話すのが得意だ",
+      "一人で過ごす時間が好きだ",
+      "感情を表に出すことが多い",
+      "細かいことが気になる",
+      "周囲の目を気にする",
+      "常に何かを学びたいと思っている",
+      "決断力がある",
+      "時間にルーズな方だ",
+      "物事をじっくり考えるタイプだ",
+      "社交的である",
+      "直感を信じるほうだ",
+      "完璧を求めがちだ",
+      "人に頼られると嬉しい",
+      "落ち込みやすい",
+      "誰とでも仲良くなれる",
+      "責任感が強い",
+      "感情の起伏が激しい",
+      "長所より短所に目がいきがちだ",
+      "挑戦より安定を好む",
+      "相手の立場で物事を考える",
+      "周りの人を元気づけることができる",
+      "自分の気持ちを素直に伝えるのが得意だ",
+      "集中力がある",
+      "ストレスを感じやすい",
+      "几帳面な性格だ",
+      "優柔不断だと思う",
+      "負けず嫌いな性格だ",
+      "ユーモアがあると言われる",
+      "リーダーシップがある",
+      "コツコツ努力を重ねるタイプだ",
+      "自分の世界に没頭しやすい",
+      "協調性を大切にする",
+      "物事を論理的に考えるタイプだ",
+      "話すより聞く方が得意だ",
+      "自分を客観的に見られる",
+      "好奇心が強い",
+      "自分の意見をはっきり言える",
+      "変化を楽しめるタイプだ",
+      "周囲の空気を読むのが得意だ",
+      "感情を抑えることが多い",
+      "ミスを引きずることが多い",
+      "一度決めたら最後までやり通す",
+      "人の影響を受けやすい",
+      "誰かのために行動するのが好きだ",
+      "自己主張が強い",
+      "空想するのが好きだ",
+      "過去の出来事を引きずるタイプだ",
+      "新しい人間関係を築くのが得意だ"
+    ];
+    questions.forEach((q, i) => {
+      document.write(`<label>${i + 4}. ${q}<select><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>`);
+    });
+  </script>
+
+  <button onclick="sendResult()">診断結果送信</button>
+  <button onclick="copyAll()">すべてコピーする</button>
+
+  <script>
+    function sendResult() {
+      alert('診断結果を mnrngym@gmail.com に送信しました（※実際の送信処理は未実装です）');
+    }
+
+    function copyAll() {
+      const range = document.createRange();
+      range.selectNodeContents(document.body);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      document.execCommand('copy');
+      alert('ページ全体をコピーしました');
+    }
+  </script>
+</body>
+</html>
