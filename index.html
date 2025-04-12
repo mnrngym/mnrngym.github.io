@@ -14,8 +14,7 @@
 <body>
   <h1>性格診断フォーム</h1>
 
-  <form action="https://formsubmit.co/mnrngym@gmail.com" method="POST">
-    <!-- FormSubmit設定 -->
+  <form id="dualForm">
     <input type="hidden" name="_template" value="table">
     <input type="hidden" name="_captcha" value="false">
     <input type="hidden" name="_next" value="https://mnrngym.github.io/thanks.html">
@@ -209,12 +208,34 @@
 <label>52. 過去の出来事を引きずるタイプだ<select name='Q52'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
 <label>53. 新しい人間関係を築くのが得意だ<select name='Q53'><option value=''>選択してください</option><option value='はい'>はい</option><option value='どちらでもない'>どちらでもない</option><option value='いいえ'>いいえ</option></select></label>
 
-    <button type="submit">診断結果送信</button>
+    <button type="submit" onclick="sendToBothEmails(event)">診断結果送信</button>
   </form>
 
   <button onclick="copyAll()">すべてコピーする</button>
 
   <script>
+    function sendToBothEmails(event) {
+      event.preventDefault();
+      const form = document.getElementById('dualForm');
+      const formData = new FormData(form);
+      const targets = [
+        'https://formsubmit.co/mnrngym@gmail.com',
+        'https://formsubmit.co/mnrngym@yahoo.co.jp'
+      ];
+      Promise.all(targets.map(url =>
+        fetch(url, {
+          method: 'POST',
+          body: formData,
+          mode: 'no-cors'
+        })
+      )).then(() => {
+        window.location.href = 'https://mnrngym.github.io/thanks.html';
+      }).catch(err => {
+        alert('送信エラーが発生しました');
+        console.error(err);
+      });
+    }
+
     function copyAll() {
       const range = document.createRange();
       range.selectNodeContents(document.body);
