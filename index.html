@@ -7,7 +7,7 @@
   <style>
     body { font-family: sans-serif; line-height: 1.6; padding: 20px; }
     label { display: block; margin-top: 10px; }
-    select { width: 100%; padding: 4px; margin-top: 4px; }
+    select, input[type=text] { width: 100%; padding: 4px; margin-top: 4px; }
     button { margin-top: 20px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
   </style>
 </head>
@@ -15,6 +15,10 @@
   <h1>性格診断フォーム</h1>
   <form action="https://formspree.io/f/xzzeojrr" method="POST">
     <input type="hidden" name="_next" value="https://mnrngym.github.io/thanks.html">
+
+    <label>こちらにお名前やニックネームなどを記入してください
+      <input type="text" name="お名前またはニックネーム" placeholder="例：たろう、Tarochan">
+    </label>
 
     <label>1. 性別
       <select name="性別">
