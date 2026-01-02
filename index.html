@@ -63,11 +63,18 @@
     .note{color:var(--muted); font-size:13px; margin:8px 0 0}
     .notice{color:var(--muted); font-size:13px; margin:12px 0 0; line-height:1.75}
     .notice strong{color:var(--ink)}
+    /* thanks view（宗教フォームと同じ挙動） */
+    #thanks{display:none; min-height:100vh; background:#fff; color:#111}
+    #thanks .center{max-width:680px; margin:0 auto; padding:80px 16px; text-align:center}
+    #thanks .box{background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:40px; box-shadow:0 8px 24px rgba(0,0,0,.06)}
+    #thanks h1{font-size:28px; margin:0 0 8px}
+    #thanks p{margin:4px 0 20px}
+    #thanks a{color:#e11d48; text-decoration:none; font-weight:600}
   </style>
 </head>
 <body>
 
-<header>
+<header id="siteHeader">
   <div class="wrap">
     <h1><strong>性格診断フォーム</strong></h1>
     <p class="lead">プルダウンで回答して送信してください。</p>
@@ -78,161 +85,194 @@
   </div>
 </header>
 
-<main class="wrap">
-  <form id="personalityForm" action="https://formsubmit.co/mnrngym@yahoo.co.jp" method="POST">
+<main class="wrap" id="siteMain">
+  <section class="card">
+    <div class="grid" id="basicGrid"></div>
+    <p class="note">各設問のプルダウンから「はい／どちらでもない／いいえ」を選んでください。</p>
+  </section>
 
-    <section class="card">
-      <div class="grid" id="basicGrid"></div>
-      <p class="note">各設問のプルダウンから「はい／どちらでもない／いいえ」を選んでください。</p>
-    </section>
+  <section class="card">
+    <h2 style="margin:0 0 12px; font-size:18px">設問</h2>
+    <div id="qgrid" class="grid"></div>
+  </section>
 
-    <section class="card">
-      <h2 style="margin:0 0 12px; font-size:18px">設問</h2>
-      <div id="qgrid" class="grid"></div>
-    </section>
+  <section class="card">
+    <div class="actions">
+      <button class="primary" type="button" id="submitBtn">診断結果送信</button>
+      <button type="button" onclick="copyAll()">すべてコピーする</button>
+    </div>
 
-    <section class="card">
-      <div class="actions">
-        <button class="primary" type="submit">診断結果送信</button>
-        <button type="button" onclick="copyAll()">すべてコピーする</button>
-      </div>
+    <div class="notice">
+      <strong>回答ありがとうございました！</strong><br><br>
 
-      <div class="notice">
-        <strong>回答ありがとうございました！</strong><br><br>
+      一両日中に Line か ご指定のメールアドレスに結果を送信します<br>
+      少々お待ちください<br><br>
 
-        一両日中に Line か ご指定のメールアドレスに結果を送信します<br>
-        少々お待ちください<br><br>
-
-        ※3日を過ぎて届かない場合は一報ください<br>
-        ※メールの方はmnrngym1@gmail.comからのメールを受け取れるようにしてください
-      </div>
-    </section>
-
-    <!-- 元からある診断結果（文言変更なし） -->
-    <input type="hidden" name="診断結果" id="result" />
-
-    <!-- 追加：FormSubmitに必ず本文を渡すための送信内容（質問内容は変えない） -->
-    <input type="hidden" name="送信内容" id="sendText" />
-
-  </form>
+      ※3日を過ぎて届かない場合は一報ください<br>
+      ※メールの方はmnrngym1@gmail.comからのメールを受け取れるようにしてください
+    </div>
+  </section>
 </main>
 
+<!-- Thanks page -->
+<div id="thanks">
+  <div class="center">
+    <div class="box">
+      <h1>ありがとうございます！</h1>
+      <p>送信が無事に完了しました。</p>
+      <p><a id="backLink" href="#">サイトに戻る</a></p>
+    </div>
+    <p style="margin-top:18px; color:#6b7280; font-size:13px">（静的サイトから送信）</p>
+  </div>
+</div>
+
 <script>
-/* 基本情報（番号削除済み） */
-const basicQuestions = [
-  { title:"性別", name:"性別", options:["選択してください","男性","女性","その他"] },
-  { title:"年齢", name:"年齢", options:(()=>{const a=["選択してください"];for(let i=1;i<=100;i++)a.push(i+"歳");return a;})() },
-  { title:"職業", name:"職業", options:[
-    "選択してください","経営者・役員","会社員（総合職）","会社員（一般職）",
-    "契約社員・派遣社員","パート・アルバイト","公務員（教職員除く）","教職員",
-    "医療関係者","自営業・自由業","専業主婦・主夫","大学生・大学院生",
-    "専門学校生・短大生","高校生",
-    "士業（公認会計士・弁護士・税理士・司法書士）",
-    "無職","定年退職","その他"
-  ]}
-];
+  // 送信先（Yahoo）
+  const MAIL_TO = 'mnrngym@yahoo.co.jp';
+  const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/ajax/' + encodeURIComponent(MAIL_TO);
 
-const basicGrid = document.getElementById("basicGrid");
-basicQuestions.forEach(q=>{
-  const d=document.createElement("div"); d.className="q";
-  d.innerHTML=`<h4>${q.title}</h4>`;
-  const s=document.createElement("select"); s.name=q.name;
+  // 基本情報（番号なし）
+  const basicQuestions = [
+    { title:"性別", name:"性別", options:["選択してください","男性","女性","その他"] },
+    { title:"年齢", name:"年齢", options:(()=>{const a=["選択してください"];for(let i=1;i<=100;i++)a.push(i+"歳");return a;})() },
+    { title:"職業", name:"職業", options:[
+      "選択してください","経営者・役員","会社員（総合職）","会社員（一般職）",
+      "契約社員・派遣社員","パート・アルバイト","公務員（教職員除く）","教職員",
+      "医療関係者","自営業・自由業","専業主婦・主夫","大学生・大学院生",
+      "専門学校生・短大生","高校生",
+      "士業（公認会計士・弁護士・税理士・司法書士）",
+      "無職","定年退職","その他"
+    ]}
+  ];
 
-  q.options.forEach((o,i)=>{
-    const op=document.createElement("option");
-    if(i===0){
-      op.value="";
-      op.textContent=o;
-    }else{
-      // 年齢だけ value は数値、表示は「○歳」（内容は変更しない）
-      op.value = (q.name==="年齢") ? o.replace("歳","") : o;
-      op.textContent=o;
-    }
-    s.appendChild(op);
+  const basicGrid = document.getElementById("basicGrid");
+  basicQuestions.forEach(q=>{
+    const d=document.createElement("div"); d.className="q";
+    d.innerHTML=`<h4>${q.title}</h4>`;
+    const s=document.createElement("select"); s.name=q.name;
+
+    q.options.forEach((o,i)=>{
+      const op=document.createElement("option");
+      if(i===0){
+        op.value="";
+        op.textContent=o;
+      }else{
+        // 年齢だけ value は数値、表示は「○歳」
+        op.value = (q.name==="年齢") ? o.replace("歳","") : o;
+        op.textContent=o;
+      }
+      s.appendChild(op);
+    });
+
+    d.appendChild(s);
+    basicGrid.appendChild(d);
   });
 
-  d.appendChild(s);
-  basicGrid.appendChild(d);
-});
+  // 設問（文言は一切変更しない / 1〜50）
+  const questions=[
+    "計画的に物事を進めるのが好きだ","新しいことに挑戦するのが好きだ","人前で話すのが得意だ",
+    "一人で過ごす時間が好きだ","感情を表に出すことが多い","細かいことが気になる","周囲の目を気にする",
+    "常に何かを学びたいと思っている","決断力がある","時間にルーズな方だ","物事をじっくり考えるタイプだ",
+    "社交的である","直感を信じるほうだ","完璧を求めがちだ","人に頼られると嬉しい","落ち込みやすい",
+    "誰とでも仲良くなれる","責任感が強い","感情の起伏が激しい","長所より短所に目がいきがちだ",
+    "挑戦より安定を好む","相手の立場で物事を考える","周りの人を元気づけることができる",
+    "自分の気持ちを素直に伝えるのが得意だ","集中力がある","ストレスを感じやすい","几帳面な性格だ",
+    "優柔断だと思う","負けず嫌いな性格だ","ユーモアがあると言われる","リーダーシップがある",
+    "コツコツ努力を重ねるタイプだ","自分の世界に没頭しやすい","協調性を大切にする",
+    "物事を論理的に考えるタイプだ","話すより聞く方が得意だ","自分を客観的に見られる",
+    "好奇心が強い","自分の意見をはっきり言える","変化を楽しめるタイプだ","周囲の空気を読むのが得意だ",
+    "感情を抑えることが多い","ミスを引きずることが多い","一度決めたら最後までやり通す",
+    "人の影響を受けやすい","誰かのために行動するのが好きだ","自己主張が強い",
+    "空想するのが好きだ","過去の出来事を引きずるタイプだ","新しい人間関係を築くのが得意だ"
+  ];
 
-/* 設問（文言は一切変更しない / 1〜50に振り直し済み） */
-const questions=[
-"計画的に物事を進めるのが好きだ","新しいことに挑戦するのが好きだ","人前で話すのが得意だ",
-"一人で過ごす時間が好きだ","感情を表に出すことが多い","細かいことが気になる","周囲の目を気にする",
-"常に何かを学びたいと思っている","決断力がある","時間にルーズな方だ","物事をじっくり考えるタイプだ",
-"社交的である","直感を信じるほうだ","完璧を求めがちだ","人に頼られると嬉しい","落ち込みやすい",
-"誰とでも仲良くなれる","責任感が強い","感情の起伏が激しい","長所より短所に目がいきがちだ",
-"挑戦より安定を好む","相手の立場で物事を考える","周りの人を元気づけることができる",
-"自分の気持ちを素直に伝えるのが得意だ","集中力がある","ストレスを感じやすい","几帳面な性格だ",
-"優柔断だと思う","負けず嫌いな性格だ","ユーモアがあると言われる","リーダーシップがある",
-"コツコツ努力を重ねるタイプだ","自分の世界に没頭しやすい","協調性を大切にする",
-"物事を論理的に考えるタイプだ","話すより聞く方が得意だ","自分を客観的に見られる",
-"好奇心が強い","自分の意見をはっきり言える","変化を楽しめるタイプだ","周囲の空気を読むのが得意だ",
-"感情を抑えることが多い","ミスを引きずることが多い","一度決めたら最後までやり通す",
-"人の影響を受けやすい","誰かのために行動するのが好きだ","自己主張が強い",
-"空想するのが好きだ","過去の出来事を引きずるタイプだ","新しい人間関係を築くのが得意だ"
-];
-
-const qgrid=document.getElementById("qgrid");
-questions.forEach((q,i)=>{
-  const d=document.createElement("div"); d.className="q";
-  d.innerHTML=`<h4>${i+1}. ${q}</h4>
-  <select name="Q${i+1}">
-    <option value="">選択してください</option>
-    <option value="はい">はい</option>
-    <option value="どちらでもない">どちらでもない</option>
-    <option value="いいえ">いいえ</option>
-  </select>`;
-  qgrid.appendChild(d);
-});
-
-/* 診断（文言は一切変更しない） */
-document.getElementById("personalityForm").addEventListener("submit",(event)=>{
-  // 1) 先に診断結果を確定
-  let score=0;
-  document.querySelectorAll("select[name^='Q']").forEach(s=>{
-    if(s.value==="はい")score+=2;
-    else if(s.value==="どちらでもない")score+=1;
+  const qgrid=document.getElementById("qgrid");
+  questions.forEach((q,i)=>{
+    const d=document.createElement("div"); d.className="q";
+    d.innerHTML=`<h4>${i+1}. ${q}</h4>
+    <select id="q${i+1}">
+      <option value="" selected>選択してください</option>
+      <option value="はい">はい</option>
+      <option value="どちらでもない">どちらでもない</option>
+      <option value="いいえ">いいえ</option>
+    </select>`;
+    qgrid.appendChild(d);
   });
 
-  let result = "";
-  if (score >= 80) {
-    result = "あなたは外交的でエネルギッシュなタイプです。";
-  } else if (score >= 60) {
-    result = "あなたはバランスのとれた思慮深いタイプです。";
-  } else {
-    result = "あなたは内向的で繊細なタイプです。";
+  // Thanks表示
+  function showThanks(){
+    document.getElementById('siteHeader').style.display='none';
+    document.getElementById('siteMain').style.display='none';
+    const t = document.getElementById('thanks');
+    t.style.display='block';
+    document.getElementById('backLink').href = location.origin + location.pathname;
   }
-  document.getElementById("result").value = result;
 
-  // 2) 追加：送信内容を必ず作る（FormSubmitの配送安定化）
-  const lines = [];
-  const sex = document.querySelector('select[name="性別"]').value || "";
-  const age = document.querySelector('select[name="年齢"]').value || "";
-  const job = document.querySelector('select[name="職業"]').value || "";
+  // 送信ボタン
+  document.getElementById('submitBtn').addEventListener('click', async ()=>{
+    // 診断（文言は一切変更しない）
+    let score = 0;
+    for(let i=1;i<=50;i++){
+      const v = document.getElementById('q'+i).value;
+      if(v==="はい") score += 2;
+      else if(v==="どちらでもない") score += 1;
+    }
+    let result = "";
+    if (score >= 80) result = "あなたは外交的でエネルギッシュなタイプです。";
+    else if (score >= 60) result = "あなたはバランスのとれた思慮深いタイプです。";
+    else result = "あなたは内向的で繊細なタイプです。";
 
-  lines.push(`性別: ${sex}`);
-  lines.push(`年齢: ${age}`);
-  lines.push(`職業: ${job}`);
+    // 送信本文を作成（質問文は変更しない）
+    const lines = [];
+    const sex = document.querySelector('select[name="性別"]').value || '';
+    const age = document.querySelector('select[name="年齢"]').value || '';
+    const job = document.querySelector('select[name="職業"]').value || '';
+    lines.push(`性別: ${sex}`);
+    lines.push(`年齢: ${age}`);
+    lines.push(`職業: ${job}`);
+    for(let i=1;i<=50;i++){
+      const ans = document.getElementById('q'+i).value || '未回答';
+      lines.push(`${i}. ${questions[i-1]} -> ${ans}`);
+    }
+    lines.push(`診断結果: ${result}`);
+    const bodyText = lines.join('\n');
 
-  document.querySelectorAll('select[name^="Q"]').forEach((s, idx) => {
-    lines.push(`${idx+1}. ${questions[idx]} -> ${s.value || ""}`);
+    // 1) FormSubmit /ajax に JSON送信（宗教フォームと同じ）
+    let sent = false;
+    try{
+      const res = await fetch(FORMSUBMIT_ENDPOINT,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify({
+          _subject:'性格診断フォーム 送信',
+          message: bodyText
+        })
+      });
+      if(res.ok){ sent = true; }
+    }catch(e){ /* フォールバックへ */ }
+
+    // 2) 失敗時は mailto でフォールバック（宗教フォームと同じ）
+    if(!sent){
+      const subject = encodeURIComponent('性格診断フォーム 送信');
+      const body = encodeURIComponent(bodyText + '\n\n(静的サイトから送信)');
+      window.location.href = `mailto:${encodeURIComponent(MAIL_TO)}?subject=${subject}&body=${body}`;
+    }
+
+    setTimeout(showThanks, 600);
   });
 
-  lines.push(`診断結果: ${result}`);
+  // 直接 ?thanks=1 で開いた場合もサンクス表示
+  if(new URLSearchParams(location.search).get('thanks')==='1'){ showThanks(); }
 
-  document.getElementById("sendText").value = lines.join("\n");
-});
-
-/* コピー（元の挙動維持） */
-function copyAll(){
-  const r=document.createRange();
-  r.selectNodeContents(document.body);
-  const s=window.getSelection();
-  s.removeAllRanges(); s.addRange(r);
-  document.execCommand("copy");
-  alert("ページ全体をコピーしました");
-}
+  // コピー（元の挙動維持）
+  function copyAll(){
+    const r=document.createRange();
+    r.selectNodeContents(document.body);
+    const s=window.getSelection();
+    s.removeAllRanges(); s.addRange(r);
+    document.execCommand("copy");
+    alert("ページ全体をコピーしました");
+  }
 </script>
 
 </body>
