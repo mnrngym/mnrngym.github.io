@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>性格診断フォーム</title>
   <style>
     :root{
@@ -10,60 +10,24 @@
       --line:#1d2633; --btn:#121a26;
     }
     *{box-sizing:border-box}
-    body{
-      margin:0; background:var(--bg); color:var(--ink);
-      font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
-      line-height:1.6;
-    }
-    header{
-      position:sticky; top:0; z-index:10;
-      backdrop-filter:blur(8px);
-      background:linear-gradient(180deg,rgba(11,15,20,.9),rgba(11,15,20,.6));
-      border-bottom:1px solid var(--line);
-    }
+    body{margin:0; background:var(--bg); color:var(--ink); font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif; line-height:1.6}
+    header{position:sticky; top:0; z-index:10; backdrop-filter:blur(8px); background:linear-gradient(180deg,rgba(11,15,20,.9),rgba(11,15,20,.6)); border-bottom:1px solid var(--line)}
     .wrap{max-width:980px; margin:0 auto; padding:16px}
     h1{font-size:clamp(28px,6vw,40px); margin:8px 0 4px; font-weight:800}
     p.lead{color:var(--muted); margin:0}
-    .card{
-      background:var(--panel);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:16px;
-      box-shadow:0 6px 24px rgba(0,0,0,.25);
-      margin-top:12px;
-    }
+    .card{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:0 6px 24px rgba(0,0,0,.25); margin-top:12px}
     .grid{display:grid; grid-template-columns:1fr; gap:12px}
-    @media(min-width:900px){ .grid{grid-template-columns:1fr 1fr} }
-    .q{
-      padding:12px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background:#0f1621;
-    }
+    @media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
+    .q{padding:12px; border-radius:12px; border:1px solid var(--line); background:#0f1621}
     .q h4{margin:0 0 8px; font-size:15px; line-height:1.45}
-    select{
-      width:100%;
-      padding:10px 12px;
-      border-radius:10px;
-      border:1px solid #223049;
-      background:#0f1621;
-      color:var(--ink);
-    }
+    select,input[type="email"]{width:100%; padding:10px 12px; border-radius:10px; border:1px solid #223049; background:#0f1621; color:var(--ink)}
     .actions{display:flex; gap:8px; flex-wrap:wrap}
-    button{
-      padding:12px 16px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background:var(--btn);
-      color:var(--ink);
-      cursor:pointer;
-      font-size:16px;
-    }
+    button{padding:12px 16px; border-radius:12px; border:1px solid var(--line); background:var(--btn); color:var(--ink); cursor:pointer; font-size:16px}
     button.primary{border-color:var(--accent)}
     .note{color:var(--muted); font-size:13px; margin:8px 0 0}
     .notice{color:var(--muted); font-size:13px; margin:12px 0 0; line-height:1.75}
     .notice strong{color:var(--ink)}
-    /* thanks view（宗教フォームと同じ挙動） */
+    /* thanks */
     #thanks{display:none; min-height:100vh; background:#fff; color:#111}
     #thanks .center{max-width:680px; margin:0 auto; padding:80px 16px; text-align:center}
     #thanks .box{background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:40px; box-shadow:0 8px 24px rgba(0,0,0,.06)}
@@ -78,16 +42,20 @@
   <div class="wrap">
     <h1><strong>性格診断フォーム</strong></h1>
     <p class="lead">プルダウンで回答して送信してください。</p>
-    <p class="lead">
-      あなたの日常の傾向から、性格を推定します。<br>
-      回答後、一番下の「診断結果送信」を押してください
-    </p>
+    <p class="lead">あなたの日常の傾向から、性格を推定します。<br>回答後、一番下の「診断結果送信」を押してください</p>
   </div>
 </header>
 
 <main class="wrap" id="siteMain">
   <section class="card">
     <div class="grid" id="basicGrid"></div>
+
+    <div class="q">
+      <h4>結果送付用メールアドレス（任意）</h4>
+      <input id="userEmail" type="email" placeholder="例：example@gmail.com（空欄でもOK）" />
+      <p class="note">空欄の場合、結果は管理者からLine等でお送りします。</p>
+    </div>
+
     <p class="note">各設問のプルダウンから「はい／どちらでもない／いいえ」を選んでください。</p>
   </section>
 
@@ -104,17 +72,14 @@
 
     <div class="notice">
       <strong>回答ありがとうございました！</strong><br><br>
-
       一両日中に Line か ご指定のメールアドレスに結果を送信します<br>
       少々お待ちください<br><br>
-
       ※3日を過ぎて届かない場合は一報ください<br>
       ※メールの方はmnrngym1@gmail.comからのメールを受け取れるようにしてください
     </div>
   </section>
 </main>
 
-<!-- Thanks page -->
 <div id="thanks">
   <div class="center">
     <div class="box">
@@ -127,9 +92,20 @@
 </div>
 
 <script>
-  // 送信先（Yahoo）
-  const MAIL_TO = 'mnrngym@yahoo.co.jp';
-  const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/ajax/' + encodeURIComponent(MAIL_TO);
+  // ======= 設定：あなたの管理メール（必須） =======
+  const ADMIN_EMAIL = 'mnrngym@yahoo.co.jp';
+
+  // ======= 設定：GAS WebアプリURL（あとで貼る） =======
+  const GAS_WEBAPP_URL = 'PASTE_YOUR_GAS_WEBAPP_URL_HERE';
+
+  // 日付（YYYY-MM-DD）
+  function ymd(){
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth()+1).padStart(2,'0');
+    const dd = String(d.getDate()).padStart(2,'0');
+    return `${yyyy}-${mm}-${dd}`;
+  }
 
   // 基本情報（番号なし）
   const basicQuestions = [
@@ -144,28 +120,21 @@
       "無職","定年退職","その他"
     ]}
   ];
-
   const basicGrid = document.getElementById("basicGrid");
   basicQuestions.forEach(q=>{
     const d=document.createElement("div"); d.className="q";
     d.innerHTML=`<h4>${q.title}</h4>`;
     const s=document.createElement("select"); s.name=q.name;
-
     q.options.forEach((o,i)=>{
       const op=document.createElement("option");
-      if(i===0){
-        op.value="";
-        op.textContent=o;
-      }else{
-        // 年齢だけ value は数値、表示は「○歳」
+      if(i===0){ op.value=""; op.textContent=o; }
+      else{
         op.value = (q.name==="年齢") ? o.replace("歳","") : o;
         op.textContent=o;
       }
       s.appendChild(op);
     });
-
-    d.appendChild(s);
-    basicGrid.appendChild(d);
+    d.appendChild(s); basicGrid.appendChild(d);
   });
 
   // 設問（文言は一切変更しない / 1〜50）
@@ -185,21 +154,19 @@
     "人の影響を受けやすい","誰かのために行動するのが好きだ","自己主張が強い",
     "空想するのが好きだ","過去の出来事を引きずるタイプだ","新しい人間関係を築くのが得意だ"
   ];
-
   const qgrid=document.getElementById("qgrid");
   questions.forEach((q,i)=>{
     const d=document.createElement("div"); d.className="q";
     d.innerHTML=`<h4>${i+1}. ${q}</h4>
-    <select id="q${i+1}">
-      <option value="" selected>選択してください</option>
-      <option value="はい">はい</option>
-      <option value="どちらでもない">どちらでもない</option>
-      <option value="いいえ">いいえ</option>
-    </select>`;
+      <select id="q${i+1}">
+        <option value="" selected>選択してください</option>
+        <option value="はい">はい</option>
+        <option value="どちらでもない">どちらでもない</option>
+        <option value="いいえ">いいえ</option>
+      </select>`;
     qgrid.appendChild(d);
   });
 
-  // Thanks表示
   function showThanks(){
     document.getElementById('siteHeader').style.display='none';
     document.getElementById('siteMain').style.display='none';
@@ -208,9 +175,8 @@
     document.getElementById('backLink').href = location.origin + location.pathname;
   }
 
-  // 送信ボタン
   document.getElementById('submitBtn').addEventListener('click', async ()=>{
-    // 診断（文言は一切変更しない）
+    // スコア計算（診断文言は既存のまま）
     let score = 0;
     for(let i=1;i<=50;i++){
       const v = document.getElementById('q'+i).value;
@@ -222,14 +188,17 @@
     else if (score >= 60) result = "あなたはバランスのとれた思慮深いタイプです。";
     else result = "あなたは内向的で繊細なタイプです。";
 
-    // 送信本文を作成（質問文は変更しない）
+    // 本文作成
     const lines = [];
     const sex = document.querySelector('select[name="性別"]').value || '';
     const age = document.querySelector('select[name="年齢"]').value || '';
     const job = document.querySelector('select[name="職業"]').value || '';
+    const userEmail = (document.getElementById('userEmail').value || '').trim();
+
     lines.push(`性別: ${sex}`);
     lines.push(`年齢: ${age}`);
     lines.push(`職業: ${job}`);
+    lines.push(`返信用メール（任意）: ${userEmail}`);
     for(let i=1;i<=50;i++){
       const ans = document.getElementById('q'+i).value || '未回答';
       lines.push(`${i}. ${questions[i-1]} -> ${ans}`);
@@ -237,34 +206,40 @@
     lines.push(`診断結果: ${result}`);
     const bodyText = lines.join('\n');
 
-    // 1) FormSubmit /ajax に JSON送信（宗教フォームと同じ）
+    // 件名：【性格診断】YYYY-MM-DD
+    const subject = `【性格診断】${ymd()}`;
+
+    // GASへ送信（成功→サンクス表示）
     let sent = false;
     try{
-      const res = await fetch(FORMSUBMIT_ENDPOINT,{
+      const res = await fetch(GAS_WEBAPP_URL, {
         method:'POST',
-        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        headers:{'Content-Type':'application/json'},
         body: JSON.stringify({
-          _subject:'性格診断フォーム 送信',
-          message: bodyText
+          subject,
+          adminEmail: ADMIN_EMAIL,
+          userEmail,           // 空欄可
+          sex, age, job,
+          score, result,
+          answersText: bodyText,
+          answers: Array.from({length:50}, (_,i)=> document.getElementById('q'+(i+1)).value || '')
         })
       });
       if(res.ok){ sent = true; }
-    }catch(e){ /* フォールバックへ */ }
+    }catch(e){}
 
-    // 2) 失敗時は mailto でフォールバック（宗教フォームと同じ）
+    // フォールバック（管理者へ mailto）
     if(!sent){
-      const subject = encodeURIComponent('性格診断フォーム 送信');
-      const body = encodeURIComponent(bodyText + '\n\n(静的サイトから送信)');
-      window.location.href = `mailto:${encodeURIComponent(MAIL_TO)}?subject=${subject}&body=${body}`;
+      const mailSub = encodeURIComponent(subject);
+      const mailBody = encodeURIComponent(bodyText + '\n\n(送信に失敗したため mailto で送信)');
+      window.location.href = `mailto:${encodeURIComponent(ADMIN_EMAIL)}?subject=${mailSub}&body=${mailBody}`;
     }
 
     setTimeout(showThanks, 600);
   });
 
-  // 直接 ?thanks=1 で開いた場合もサンクス表示
   if(new URLSearchParams(location.search).get('thanks')==='1'){ showThanks(); }
 
-  // コピー（元の挙動維持）
   function copyAll(){
     const r=document.createRange();
     r.selectNodeContents(document.body);
