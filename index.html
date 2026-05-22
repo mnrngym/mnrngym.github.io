@@ -87,6 +87,12 @@
 
 <main class="wrap" id="siteMain">
   <section class="card">
+    <div class="row">
+      <label for="nickname" style="display:block; margin-bottom:8px;">こちらにお名前やニックネームなどを記入してください</label>
+      <input id="nickname" type="text" placeholder="例：匿名でも可" style="width:100%; padding:10px 12px; border-radius:10px; border:1px solid #223049; background:#0f1621; color:var(--ink);" />
+    </div>
+  </section>
+  <section class="card">
     <div class="grid" id="basicGrid"></div>
     <p class="note">各設問のプルダウンから「はい／どちらでもない／いいえ」を選んでください。</p>
   </section>
@@ -224,6 +230,8 @@
 
     // 送信本文を作成（質問文は変更しない）
     const lines = [];
+    const name = document.getElementById('nickname').value || '';
+    lines.push(`名前/ニックネーム: ${name}`);
     const sex = document.querySelector('select[name="性別"]').value || '';
     const age = document.querySelector('select[name="年齢"]').value || '';
     const job = document.querySelector('select[name="職業"]').value || '';
